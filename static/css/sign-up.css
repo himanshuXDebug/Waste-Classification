@@ -1,0 +1,256 @@
+/* styles.css */
+body {
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    color: #fff;
+    background-color: #1a1a2e;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+.container {
+    display: flex;
+    width: 80%;
+    max-width: 1000px;
+    background: #2b2b41;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+}
+.left-section{
+    margin-top: 20px;
+    width: 800px;
+    height: 600px;
+    overflow: contain;
+}
+.left_image {
+    margin-top: 30px;
+    width: 85%;
+    height: 80%;
+    margin-left: 50px;
+}
+.left_image img{
+    border-radius: 30px;
+    width: 100%;
+    height: 100%;
+}
+
+.branding h1 {
+    font-size: 2rem;
+    margin: 0;
+    margin-left: 30px;
+}
+
+.tagline p {
+    font-size: 18px;
+    line-height: 2;
+    margin: 0;
+    margin-top: 20px;
+    margin-left: 50px;
+    margin-bottom: 20px;
+}
+
+.right-section {
+    flex: 1;
+    background: #3d3d5c;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.right-section h2 {
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+}
+
+.right-section p {
+    font-size: 1rem;
+    margin-bottom: 20px;
+}
+
+.right-section a {
+    color: #7289da;
+    text-decoration: none;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group {
+    display: flex;
+    gap: 10px;
+}
+
+input {
+    padding: 10px;
+    width: 280px;
+    margin-bottom: 20px;
+    border: none;
+    border-radius: 5px;
+    background: #5c5c81;
+    color: #fff;
+}
+
+input::placeholder {
+    color: #bbb;
+}
+input[type="checkbox"]{
+    position: relative;
+    left: 120px;
+}
+
+.terms {
+    display: flex;
+    width: 200%;
+    position: relative;
+    right: 250px
+}
+
+button {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 150px;
+}
+
+button.btn {
+    background: #7289da;
+    color: #fff;
+    font-size: 1rem;
+    transition: background 0.3s ease;
+}
+
+button.btn:hover {
+    background: #5a6db7;
+}
+
+.social-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+button.google {
+    background: #dd4b39;
+}
+
+button.apple {
+    background: #333;
+}
+.gender-label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    display: block;
+    color: #ffffff;
+}
+
+.gender-select {
+    width: 100%;
+    padding: 4px;
+    border: 1px solid #6b7280;
+    border-radius: 5px;
+    background-color: #1e293b;
+    color: #ffffff;
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+.gender-select:focus {
+    outline: none;
+    border-color: #2563eb;
+    box-shadow: 0 0 5px rgba(37, 99, 235, 0.5);
+}
+
+.gender-container {
+    margin-bottom: 20px;
+}
+
+@media screen and (max-width: 768px) {
+    .container {
+        flex-direction: column;
+        width: 95%;
+        margin: 20px auto;
+    }
+
+    .left-section {
+        width: 100%;
+        height: auto;
+    }
+
+    .left_image {
+        margin: 10px auto;
+        width: 90%;
+    }
+
+    .right-section {
+        width: 100%;
+        padding: 20px;
+    }
+
+    .branding h1 {
+        font-size: 1.5rem;
+        text-align: center;
+        margin-left: 0;
+    }
+
+    .tagline p {
+        font-size: 16px;
+        margin: 15px;
+        text-align: center;
+    }
+
+    .form-group {
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    input {
+        width: 100%;
+        margin-bottom: 15px;
+    }
+
+    .terms {
+        flex-direction: row;
+        align-items: flex-start;
+        gap: 10px;
+        margin-bottom: 15px;
+        font-size: 14px;
+    }
+
+    .social-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    button {
+        width: 100%;
+        max-width: none;
+    }
+}
+
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+    .container {
+        width: 90%;
+    }
+
+    .left-section {
+        width: 50%;
+    }
+
+    .branding h1 {
+        font-size: 1.8rem;
+    }
+
+    .tagline p {
+        font-size: 16px;
+    }
+
+    input {
+        width: 100%;
+    }
+}

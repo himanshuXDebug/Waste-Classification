@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
+    <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/responsive.css') }}"> -->
+</head>
+
+<body>
+    <header class="glassmorphism" data-aos="fade-down">
+        <div class="container header-container">
+          <div class="logo">
+            <h1><span>ECOFY</span></h1>
+          </div>
+          <button class="mobile-menu-btn" aria-label="Toggle Menu">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+          <nav class="main-nav">
+            <ul>
+              <li><a href="/" class="nav-link highlight">Home</a></li>
+              <li><a href="#services" class="nav-link highlight">Services</a></li>
+              <li><a href="#contact" class="nav-link highlight">Contact</a></li>
+              <li><a href="/logout" class="nav-link highlight" style="background-color: brown;">Logout</a></li>
+            </ul>
+          </nav>
+        </div>
+      </header>
+
+    <main class="profile-wrapper">
+        <div class="profile-container">
+            <div class="profile-section-left">
+                <h1>Profile</h1>
+                <form method="POST" enctype="multipart/form-data">
+                    <div class="profile-section">
+                        <label for="username">Username:</label>
+                        <input type="text" id="username" name="username" value="{{ user['username'] }}" required>
+                    </div>
+                    <div class="profile-section">
+                        <label for="password">Password:</label>
+                        <input type="password" id="password" name="password" value="{{ user['password'] }} " required >
+                        <span class="toggle-password">
+                            <i id="password-icon" class="fa fa-eye"></i>
+                        </span>
+                    </div>
+                    <div class="profile-section-image">
+                        {% if user['profile_image'] %}
+                        <img src="{{ url_for('profile_image', filename=user['profile_image']) }}" alt="Profile Image"
+                            class="profile-image">
+                        {% else %}
+                        <img src="{{ url_for('static', filename='IMG/default_profile.png') }}"
+                            alt="Default Profile Image" class="profile-image">
+                        {% endif %}
+                        <input type="file" id="profile_image" name="profile_image">
+                    </div>
+                    <button type="submit">Save Changes</button>
+                </form>
+            </div>
+            <div class="rewards-section">
+                <h2>Your Rewards</h2>
+                <div class="reward-card">
+                    <p><strong>Points:</strong> {{ user['rewards'] }}</p>
+                    <p>
+                        <strong>Level:</strong>
+                        {% if user['rewards'] < 50 %}
+                            Bronze
+                        {% elif user['rewards'] < 100 %}
+                            Silver
+                        {% else %}
+                            Gold
+                        {% endif %}
+                    </p>
+                </div>
+                <div class="reward-progress">
+                    <p><strong>Progress to Next Level:</strong></p>
+                    <div class="progress-bar">
+                        <div class="progress"
+                            {% if user['rewards'] < 50 %}
+                                {{ (user['rewards'] / 50) * 100 }}%;
+                            {% elif user['rewards'] < 100 %}
+                                {{ ((user['rewards'] - 50) / 50) * 100 }}%;
+                            {% else %}
+                                100%;
+                            {% endif %}">
+                        </div>
+                    </div>
+                    <p>
+                        {% if user['rewards'] < 50 %}
+                            Reach 50 points for Silver Level!
+                        {% elif user['rewards'] < 100 %}
+                            Reach 100 points for Gold Level!
+                        {% else %}
+                            You’ve achieved the highest level—Gold! Keep contributing!
+                        {% endif %}
+                    </p>
+                </div>
+                <p>Keep uploading waste images to earn more points and achieve higher levels!</p>
+            </div>
+            
+        </div>
+    </main>
+    <script>
+        const passwordInput = document.getElementById('password');
+        const togglePassword = document.querySelector('.toggle-password');
+        const passwordIcon = document.getElementById('password-icon');
+
+        togglePassword.addEventListener('click', () => {
+            const isPassword = passwordInput.getAttribute('type') === 'password';
+            passwordInput.setAttribute('type', isPassword ? 'text' : 'password');
+            passwordIcon.classList.toggle('fa-eye', !isPassword);
+            passwordIcon.classList.toggle('fa-eye-slash', isPassword);
+        });
+        document.querySelector('.mobile-menu-btn').addEventListener('click', function () {
+      this.classList.toggle('active');
+      document.querySelector('.main-nav').classList.toggle('active');
+    });
+    </script>
+</body>
+
+</html>

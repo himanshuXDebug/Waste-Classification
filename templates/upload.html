@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Image for Classification</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/upload.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/upload_mobile.css') }}">
+</head>
+
+<body>
+    <header class="glassmorphism" data-aos="fade-down">
+        <div class="container header-container">
+          <div class="logo">
+            <h1><span>ECOFY</span></h1>
+          </div>
+          <button class="mobile-menu-btn" aria-label="Toggle Menu">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+          <nav class="main-nav">
+            <ul>
+              <li><a href="/" class="nav-link highlight">Home</a></li>
+              <li><a href="#services" class="nav-link highlight">Services</a></li>
+              <li><a href="#contact" class="nav-link highlight">Contact</a></li>
+              <li><a href="/profile"class="nav-link highlight">Profile</a></li>
+            </ul>
+          </nav>
+        </div>
+      </header>
+    <div id="Blurred">
+        <div class="upload-container">
+            <!-- Left Section -->
+            <div class="left-section">
+                <h1>Upload Image for Classification</h1>
+                <div class="container">
+                    <form id="upload-form" action="/upload" method="POST" enctype="multipart/form-data">
+                        <input type="file" name="file" accept="image/*" onchange="previewImage(event)" required>
+                        <br><br>
+                        <input type="submit" value="Check" id="Check">
+                    </form>
+                </div>
+
+                <!-- Uploaded Image -->
+                {% if filename %}
+                <div class="img-container" id="upload-container">
+                    <h2>Uploaded Image</h2>
+                    <img src="{{ url_for('uploaded_file', filename=filename) }}" alt="Uploaded Image">
+                </div>
+                {% endif %}
+            </div>
+            {% if rewards %}
+            <div class="reward-notification" id="reward-notification">
+                <h3>Rewards Updated!</h3>
+                <p><strong>Total Rewards:</strong> {{ rewards }}</p>
+                <p>Keep contributing for a sustainable future!</p>
+            </div>
+            {% endif %}
+
+
+            <div class="right-section">
+
+                <!-- Image Preview -->
+                <div class="preview-container" id="preview-container">
+                    <h2 id="Pre-text">DETAILS.....</h2>
+                    <img id="preview-image" alt="Image Preview" style="display: none;">
+                </div>
+
+                <!-- Classification Results -->
+                {% if filename and predicted_label and waste_size %}
+                <div class="result-details active" id="result-container">
+                    <h2>Classification Result</h2>
+                    <table>
+                        <tr>
+                            <th>Attribute</th>
+                            <th>Details</th>
+                        </tr>
+                        <tr>
+                            <td>Item</td>
+                            <td>{{ predicted_label }}</td>
+                        </tr>
+                        <tr>
+                            <td>Waste Amount</td>
+                            <td>
+                                <span
+                                    class="{% if waste_size == 'Low' %}Low{% elif waste_size == 'Medium' %}Medium{% elif waste_size == 'Large' %}Large{% else %}unknown{% endif %}">
+                                    {{ waste_size }}
+                                </span>
+                            </td>
+                        </tr>
+                    </table>
+                    <a href="/" class="upload-link">Go Back</a>
+                    <br><br>
+                    <p id="feedback">We cannot guarantee that all information perfectly represents the image.<br>If you
+                        notice any discrepancies, please leave <strong>feedback</strong> to help us improve.</p>
+                    <button id="feedbackForm">Feedback</button>
+                    <textarea id="feedbackText" rows="4" cols="50" placeholder="Write your feedback here..."
+                        required></textarea>
+                    <button id="feedback_submit" type="submit">Submit</button>
+                    <p id="feedbackMessage">Thank you for your feedback!</p>
+
+                    {% if waste_size in ['Medium', 'Large'] %}
+                    <button id="complain-button">Complain</button>
+                </div>
+                <!-- Popup Modal -->
+                <div id="complain-modal" class="modal">
+                    <div class="modal-content">
+                        <span class="close-button">&times;</span>
+                        <h3>Share Details for Waste Disposal</h3>
+                        <form id="waste-details-form">
+                            <label for="name">Name:</label>
+                            <input type="text" id="name" name="name" placeholder="Your Name" required>
+
+                            <label for="contact">Contact:</label>
+                            <input type="text" id="contact" name="contact" placeholder="Your Contact" required>
+
+                            <label for="location">Location:</label>
+                            <input type="text" id="location" name="location" placeholder="Your Location" required>
+
+                            <label for="photos">Upload Photos:</label>
+                            <input type="file" id="photos" name="photos" multiple accept="image/*" class="photo">
+
+                            <button id="submit-details" type="submit">Submit Details</button>
+                        </form>
+
+                    </div>
+                </div>
+                {% endif %}
+
+                {% endif %}
+            </div>
+        </div>
+        <script src="{{ url_for('static', filename='js/upload.js') }}"></script>
+        <script>
+            document.querySelector('.mobile-menu-btn').addEventListener('click', function () {
+    this.classList.toggle('active');
+    document.querySelector('.main-nav').classList.toggle('active');
+  });
+        </script>
+</body>
+
+</html>

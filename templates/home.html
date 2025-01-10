@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ecofy</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/responsive.css') }}">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" />
+</head>
+
+<body>
+  <header class="glassmorphism" data-aos="fade-down">
+    <div class="container header-container">
+      <div class="logo">
+        <h1><span>ECOFY</span></h1>
+      </div>
+      <button class="mobile-menu-btn" aria-label="Toggle Menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <nav class="main-nav">
+        <ul>
+          <li><a href="#home" class="nav-link">Home</a></li>
+          <li><a href="#services" class="nav-link">Services</a></li>
+          <li><a href="#blog" class="nav-link">Blog</a></li>
+          <li><a href="#"  class="nav-link">Contact</a></li>
+          <li><a href="#" id="contactLink" onclick="openPopup()" class="nav-link highlight">Join Us</a></li>
+          <li >
+          {% if logged_in %}
+            <a href="/profile"class="nav-link highlight">Profile</a>
+            <a href="/logout" class="nav-link highlight" style="background-color: brown;">Logout</a>
+        {% else %}
+            <a href="/login" class="nav-link highlight">Login</a>
+            <a href="/signup" class="nav-link highlight">Signup</a>
+        {% endif %}</li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <section id="hero" class="hero gradient-bg" data-aos="fade-up">
+    <div class="container hero-container">
+      <div class="hero-content">
+        <h2 class="gradient-text">Smart Waste Collection</h2>
+        <p class="hero-subtitle">For a Sustainable Future</p>
+        <p class="hero-description">Revolutionizing waste management with eco-friendly solutions and smart technology.
+        </p>
+        <div class="hero-buttons">
+          <a href="#services" class="btn btn-primary-2" data-aos="zoom-in">Explore Services</a>
+          <a href="/upload" class="btn btn-primary" data-aos="zoom-in">Get Started</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="search" class="search-box glassmorphism" data-aos="fade-up">
+    <div class="container">
+      <h2 class="section-title">Discover Waste Classification Solutions</h2>
+      <form class="search-form" action="https://www.google.com/search" method="get" target="_blank">
+        <div class="search-wrapper">
+          <input type="text" name="q" placeholder="Search waste Classification topics..." required>
+          <button type="submit" class="search-btn">Search</button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <section id="services" class="services" data-aos="fade-up">
+    <div class="container">
+      <h2 class="section-title gradient-text">Our Solutions</h2>
+      <div class="services-grid">
+        <div class="service-card glassmorphism" data-aos="fade-up">
+          <div class="service-icon">
+            <img src="{{ url_for('static', filename='IMG/Garbage-collection.png') }}" alt="Garbage Collection">
+          </div>
+          <h3>Smart Collection</h3>
+          <p>IoT-enabled waste collection for maximum efficiency.</p>
+        </div>
+        <div class="service-card glassmorphism" data-aos="fade-up">
+          <div class="service-icon">
+            <img src="{{ url_for('static', filename='IMG/Recycling.png') }}" alt="Recycling">
+          </div>
+          <h3>Recycling</h3>
+          <p>Environmentally friendly recycling solutions for homes and businesses.</p>
+        </div>
+        <div class="service-card glassmorphism" data-aos="fade-up">
+          <div class="service-icon">
+            <img src="{{ url_for('static', filename='IMG/Hazardous-waste.png') }}" alt="Hazardous-waste!">
+          </div>
+          <h3>Hazardous Waste Disposal</h3>
+          <p>Safe disposal of hazardous waste, in compliance with local laws</p>
+        </div>
+        <div class="service-card glassmorphism" data-aos="fade-up">
+          <div class="service-icon">
+            <img src="{{ url_for('static', filename='IMG/compost.png') }}" alt="compost">
+          </div>
+          <h3>Composting</h3>
+          <p>Transform organic waste into valuable compost with our services</p>
+        </div>
+        <!-- Repeat for other service cards -->
+      </div>
+    </div>
+  </section>
+
+  <div id="popupForm" class="popup">
+    <div class="popup-content">
+      <span class="close-btn" onclick="closePopup()">&times;</span>
+      <h2>Fill the details</h2>
+      <form action="https://formspree.io/f/meoqlnve"
+      method="POST" id="feedbackForm">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="firstName">First Name:</label>
+            <input type="text" id="firstName" name="firstName" placeholder="Enter your first name" required>
+          </div>
+          <div class="form-group">
+            <label for="lastName">Last Name:</label>
+            <input type="text" id="lastName" name="lastName" placeholder="Enter your last name" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="phone">Phone Number:</label>
+            <input type="tel" id="phone" name="phone" placeholder="Enter your phone number" pattern="[0-9]{10}" required>
+          </div>
+          <div class="form-group">
+            <label for="email">Email Address:</label>
+            <input type="email" id="email" name="email" placeholder="Enter your email address" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="gender">Gender:</label>
+            <select id="gender" name="gender" required>
+              <option value="" disabled selected>Select your gender</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+              <option value="other">Other</option>
+              <option value="preferNotToSay">Prefer not to say</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="job">Job Profession:</label>
+            <select id="job" name="job" required>
+              <option value="" disabled selected>Select your profession</option>
+              <option value="Software Engineer">Software Engineer</option>
+              <option value="Doctor">Doctor</option>
+              <option value="Teacher">Teacher</option>
+              <option value="Student">Student</option>
+              <option value="Artist">Artist</option>
+              <option value="Entrepreneur">Entrepreneur</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="age">Age:</label>
+            <input type="number" id="age" name="age" placeholder="Enter your age" min="1" max="120" required>
+          </div>
+          <div class="form-group">
+            <label for="country">Country:</label>
+            <select id="country" name="country" required>
+              <option value="US">United States</option>
+              <option value="IN">India</option>
+              <option value="GB">United Kingdom</option>
+              <option value="CA">Canada</option>
+              <option value="AU">Australia</option>
+              <option value="FR">France</option>
+              <option value="DE">Germany</option>
+              <option value="JP">Japan</option>
+              <option value="CN">China</option>
+              <option value="BR">Brazil</option><option value="" disabled selected>Select</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="reason">Why you want to join us:</label>
+          <textarea id="reason" name="reason" placeholder="Write your reason here..." rows="5" required></textarea>
+        </div>
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+  </div>  
+
+  <section class="blog">
+    <div class="container">
+      <h2 class="section-title">Latest Insights</h2>
+      <div class="blog-grid">
+        <!-- First Blog Post -->
+        <article class="blog-card">
+          <div class="blog-image-wrapper">
+            <img src="{{ url_for('static', filename='IMG/E-Waste.png') }}" alt="E-Waste" class="blog-image">
+          </div>
+          <div class="blog-content">
+            <h3>E-Waste Solutions</h3>
+            <p>Modern approaches to electronic waste management</p>
+            <a href="#" class="read-more">Read More →</a>
+          </div>
+        </article>
+
+        <!-- Second Blog Post -->
+        <article class="blog-card">
+          <div class="blog-image-wrapper">
+            <img src="{{ url_for('static', filename='IMG/5-tips.png') }}" alt="5-tips" class="blog-image">
+          </div>
+          <div class="blog-content">
+            <h3>Top 5 Composting Tips for Beginners</h3>
+            <p>Start your composting journey with these practical tips and tricks.</p>
+            <a href="#" class="read-more">Read More →</a>
+          </div>
+        </article>
+
+        <!-- Third Blog Post -->
+        <article class="blog-card">
+          <div class="blog-image-wrapper">
+            <img src="{{ url_for('static', filename='IMG/Myth.png') }}" alt="Myth" class="blog-image">
+          </div>
+          <div class="blog-content">
+            <h3>Recycling Myths: What You Should Know</h3>
+            <p>Uncover common misconceptions about recycling and how to do it effectively</p>
+            <a href="#" class="read-more">Read More →</a>
+          </div>
+        </article>
+
+        <!-- Fourth Blog Post -->
+        <article class="blog-card">
+          <div class="blog-image-wrapper">
+            <img src="{{ url_for('static', filename='IMG/plastic.png') }}" alt="plastic" class="blog-image">
+          </div>
+          <div class="blog-content">
+            <h3>Guide to Living a Plastic-Free Life</h3>
+            <p>Learn simple steps to reduce plastic use and embrace sustainable alternatives.</p>
+            <a href="#" class="read-more">Read More →</a>
+          </div>
+        </article>
+
+        <!-- Fifth Blog Post -->
+        <article class="blog-card">
+          <div class="blog-image-wrapper">
+            <img src="{{ url_for('static', filename='IMG/planet.png') }}" alt="green energy" class="blog-image">
+          </div>
+          <div class="blog-content">
+            <h3>Green Energy Alternatives</h3>
+            <p>Explore sustainable energy options to reduce your carbon footprint.</p>
+            <a href="#" class="read-more">Read More →</a>
+          </div>
+        </article>
+        <!-- Sixth Blog Post -->
+        <article class="blog-card">
+          <div class="blog-image-wrapper">
+            <img src="{{ url_for('static', filename='IMG/lifestayle.png') }}" alt="zero waste lifestyle"
+              class="blog-image">
+          </div>
+          <div class="blog-content">
+            <h3>How to Embrace a Zero-Waste Lifestyle</h3>
+            <p>Discover practical steps to reduce waste and live a more sustainable life.</p>
+            <a href="#" class="read-more">Read More →</a>
+          </div>
+        </article>
+        <!-- Seventh Blog Post -->
+        <article class="blog-card">
+          <div class="blog-image-wrapper">
+            <img src="{{ url_for('static', filename='IMG/Upcycle.png') }}" alt="upcycling ideas"
+              class="blog-image">
+          </div>
+          <div class="blog-content">
+            <h3>Creative Upcycling Ideas for Everyday Items</h3>
+            <p>Learn how to turn old items into new treasures with these upcycling ideas.</p>
+            <a href="#" class="read-more">Read More →</a>
+          </div>
+        </article>
+        <!-- Eighth Blog Post -->
+        <article class="blog-card">
+          <div class="blog-image-wrapper">
+            <img src="{{ url_for('static', filename='IMG/Home.png') }}" alt="organic waste management"
+              class="blog-image">
+          </div>
+          <div class="blog-content">
+            <h3>Managing Organic Waste at Home</h3>
+            <p>Effective methods for handling food scraps and yard waste.</p>
+            <a href="#" class="read-more">Read More →</a>
+          </div>
+        </article>
+        <!-- Ninth Blog Post -->
+        <article class="blog-card">
+          <div class="blog-image-wrapper">
+            <img src="{{ url_for('static', filename='IMG/Climate.png') }}" alt="climate action"
+              class="blog-image">
+          </div>
+          <div class="blog-content">
+            <h3>Climate Action: How You Can Make a Difference</h3>
+            <p>Simple steps you can take to contribute to climate change mitigation.</p>
+            <a href="#" class="read-more">Read More →</a>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <div class="chatbot">
+    <button class="chatbot-toggle " onclick="toggleChat()" id="Icon">
+      <img src="../static/IMG/Chat.svg" alt="Chat">
+    </button>
+    <div class="chatbot-window glassmorphism" id="chatbotWindow">
+      <div class="chatbot-header">
+        <h3>Assistant</h3>
+        <button class="close-chat" onclick="closeChat()" id="Close">×</button>
+      </div>
+      <div class="chatbot-messages" id="chatbotMessages"></div>
+    </div>
+  </div>
+
+  <!-- Modern Footer -->
+  <footer class="footer glassmorphism" data-aos="fade-up">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-info">
+          <p>Contact : Ecofly.email.com</p>
+          <p>Phone: +91 00000000</p>
+        </div>
+        <p class="copyright">&copy; 2024 Ecofy | All Rights Reserved</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="{{ url_for('static', filename='js/script.js') }}"></script> 
+  <script src="{{ url_for('static', filename='js/Pop-ip.js') }}"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+  <script>
+    AOS.init({
+      duration: 800,
+      offset: 100,
+      easing: 'ease-in-out',
+      once: true
+    });
+    document.querySelector('.mobile-menu-btn').addEventListener('click', function () {
+      this.classList.toggle('active');
+      document.querySelector('.main-nav').classList.toggle('active');
+    });
+  </script>
+</body>
+
+</html>

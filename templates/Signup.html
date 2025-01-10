@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign-Up Page</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/sign-up.css') }}">
+<style>
+    #errorMessage {
+            display: none;
+            width:78%;
+            background-color: #ff4d4d;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+</style>
+</head>
+<body>
+    <div class="container">
+        <!-- Left Section -->
+        <div class="left-section">
+            <div class="branding">
+                <h1>ECOFY</h1>
+            </div>
+            <div class="left_image">
+            <img src="{{ url_for('static', filename='IMG/KID_Image.png') }}"/>
+            </div>
+            <div class="tagline">
+                <p>Join the movement towards a sustainable future</p>
+            </div>
+            </div>
+        <!-- Right Section -->
+        <div class="right-section">
+            <h2>Create an account</h2>
+            <p>Already have an account? <a href="/login">Log in</a></p>
+            <div id="errorMessage"></div>
+            <form method="post">
+                <input type="text" id="username" name="username" placeholder="Username" required>
+                <input type="email" id="email" name="email" placeholder="Email" required>
+                <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                <div class="form-group">
+                    <div class="gender-container">
+                        <label for="gender" class="gender-label">Gender:</label>
+                        <select id="gender" name="gender" class="gender-select">
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>                    
+                </div>
+                <div class="terms">
+                    <input type="checkbox" id="terms" required>
+                    <label for="terms">I agree to the <a href="#">Terms & Conditions</a></label>
+                </div>
+                <button type="submit" class="btn">Create Account</button>
+            </form>
+            <p>Or register with:</p>
+            <div class="social-buttons">
+                <button class="btn google">Google</button>
+                <button class="btn apple">Apple</button>
+            </div>
+        </div>
+
+    </div>
+    <script>
+        const flashedMessage = "{{ get_flashed_messages()[0] if get_flashed_messages() else '' }}";
+
+        if (flashedMessage) {
+            const errorMessageDiv = document.getElementById('errorMessage');
+            errorMessageDiv.textContent = flashedMessage;
+            errorMessageDiv.style.display = 'block';
+        }
+    </script>
+    <!-- <script src="{{ url_for('static', filename='js/Slider.js') }}"></script> -->
+</body>
+
+</html>
